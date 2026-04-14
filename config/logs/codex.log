@@ -1,0 +1,85 @@
+2026-04-14 09:17:16 | WARNING  | Cannot detect or read from CBR archives
+2026-04-14 09:17:16 | INFO     | Starting Codex v1.9.24
+2026-04-14 09:17:16 | INFO     | Ensuring database is correct and up to date...
+2026-04-14 09:17:25 | SUCCESS  | Database ready.
+2026-04-14 09:17:25 | SUCCESS  | Created admin user.
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Auto Update = False
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Banner Text = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Folder View = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Import Metadata = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Lazy Import Metadata = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Non Users = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Registration = True
+2026-04-14 09:17:25 | INFO     | Created AdminFlag: Send Telemetry = True
+2026-04-14 09:17:25 | INFO     | Created Custom Covers Dir settings in the db.
+2026-04-14 09:17:25 | INFO     | Created 1 missing auth tokens for users.
+2026-04-14 09:17:25 | INFO     | root_path: 
+2026-04-14 09:17:25 | SUCCESS  | Running Codex v1.9.24
+2026-04-14 09:17:25 | SUCCESS  | BroadcastListener started.
+2026-04-14 09:17:25 | INFO     | LibrarianDaemon started all threads.
+2026-04-14 09:17:25 | SUCCESS  | LibrarianDaemon ready for tasks.
+2026-04-14 09:17:25 | INFO     | Started watching library /home/jongwon/personal_project/law_main_road/config/custom-covers with poll
+2026-04-14 09:17:25 | INFO     | Library /home/jongwon/personal_project/law_main_road/config/custom-covers waiting for manual poll.
+2026-04-14 09:17:25 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2026-04-14 09:17:25 | INFO     | Looking for missing search entries to create...
+2026-04-14 09:17:25 | SUCCESS  | Search index found to be already synced in a moment.
+2026-04-14 09:24:40 | INFO     | Asking hypercorn to shut down gracefully. Could take 10 seconds...
+2026-04-14 09:24:40 | INFO     | BroadcastListener shutdown
+2026-04-14 09:24:40 | INFO     | LibrarianDaemon joined all threads.
+2026-04-14 09:24:40 | SUCCESS  | LibrarianDaemon finished.
+2026-04-14 09:24:40 | SUCCESS  | Goodbye.
+2026-04-14 09:24:44 | WARNING  | Cannot detect or read from CBR archives
+2026-04-14 09:24:44 | INFO     | Starting Codex v1.9.24
+2026-04-14 09:24:44 | INFO     | Ensuring database is correct and up to date...
+2026-04-14 09:24:44 | SUCCESS  | Database ready.
+2026-04-14 09:24:44 | INFO     | Created 0 missing auth tokens for users.
+2026-04-14 09:24:44 | INFO     | root_path: 
+2026-04-14 09:24:44 | SUCCESS  | Running Codex v1.9.24
+2026-04-14 09:24:44 | SUCCESS  | BroadcastListener started.
+2026-04-14 09:24:44 | INFO     | LibrarianDaemon started all threads.
+2026-04-14 09:24:44 | SUCCESS  | LibrarianDaemon ready for tasks.
+2026-04-14 09:24:44 | INFO     | Started watching library /home/jongwon/personal_project/law_main_road/config/custom-covers with poll
+2026-04-14 09:24:44 | INFO     | Library /home/jongwon/personal_project/law_main_road/config/custom-covers waiting for manual poll.
+2026-04-14 09:24:44 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2026-04-14 09:24:45 | INFO     | Looking for missing search entries to create...
+2026-04-14 09:24:45 | SUCCESS  | Search index found to be already synced in a moment.
+2026-04-14 09:26:02 | WARNING  | Cannot detect or read from CBR archives
+2026-04-14 09:26:02 | INFO     | Starting Codex v1.9.24
+2026-04-14 09:26:02 | INFO     | Ensuring database is correct and up to date...
+2026-04-14 09:26:02 | SUCCESS  | Database ready.
+2026-04-14 09:26:03 | INFO     | Created 0 missing auth tokens for users.
+2026-04-14 09:26:03 | INFO     | root_path: 
+2026-04-14 09:26:03 | SUCCESS  | Running Codex v1.9.24
+2026-04-14 09:26:03 | SUCCESS  | BroadcastListener started.
+2026-04-14 09:26:03 | INFO     | LibrarianDaemon started all threads.
+2026-04-14 09:26:03 | SUCCESS  | LibrarianDaemon ready for tasks.
+2026-04-14 09:26:03 | INFO     | Started watching library /home/jongwon/personal_project/law_main_road/config/custom-covers with poll
+2026-04-14 09:26:03 | INFO     | Library /home/jongwon/personal_project/law_main_road/config/custom-covers waiting for manual poll.
+2026-04-14 09:26:03 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2026-04-14 09:26:03 | INFO     | Looking for missing search entries to create...
+2026-04-14 09:26:03 | SUCCESS  | Search index found to be already synced in a moment.
+2026-04-14 09:26:13 | INFO     | Asking hypercorn to shut down gracefully. Could take 10 seconds...
+2026-04-14 09:26:13 | INFO     | BroadcastListener shutdown
+2026-04-14 09:26:13 | SUCCESS  | Goodbye.
+2026-04-14 09:26:27 | WARNING  | Cannot detect or read from CBR archives
+2026-04-14 09:26:27 | INFO     | Starting Codex v1.9.24
+2026-04-14 09:26:27 | INFO     | Ensuring database is correct and up to date...
+2026-04-14 09:26:27 | SUCCESS  | Database ready.
+2026-04-14 09:26:28 | INFO     | Created 0 missing auth tokens for users.
+2026-04-14 09:26:28 | INFO     | root_path: 
+2026-04-14 09:26:28 | SUCCESS  | Running Codex v1.9.24
+2026-04-14 09:26:28 | SUCCESS  | BroadcastListener started.
+2026-04-14 09:26:28 | INFO     | LibrarianDaemon started all threads.
+2026-04-14 09:26:28 | SUCCESS  | LibrarianDaemon ready for tasks.
+2026-04-14 09:26:28 | INFO     | Started watching library /home/jongwon/personal_project/law_main_road/config/custom-covers with poll
+2026-04-14 09:26:28 | INFO     | Library /home/jongwon/personal_project/law_main_road/config/custom-covers waiting for manual poll.
+2026-04-14 09:26:28 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2026-04-14 09:26:28 | INFO     | Looking for missing search entries to create...
+2026-04-14 09:26:28 | SUCCESS  | Search index found to be already synced in a moment.
+2026-04-14 09:26:32 | INFO     | Saved new latest codex version 1.10.11.
+2026-04-14 09:26:32 | INFO     | Checked Codex latest version in a moment.
+2026-04-14 09:27:44 | INFO     | Asking hypercorn to shut down gracefully. Could take 10 seconds...
+2026-04-14 09:27:44 | INFO     | LibrarianDaemon joined all threads.
+2026-04-14 09:27:44 | INFO     | BroadcastListener shutdown
+2026-04-14 09:27:44 | SUCCESS  | LibrarianDaemon finished.
+2026-04-14 09:27:44 | SUCCESS  | Goodbye.
