@@ -1,16 +1,20 @@
 .panel {
   display: grid;
-  gap: var(--kl-space-3);
-  padding: var(--kl-space-4);
-  background: var(--kl-surface-01);
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  border-radius: var(--kl-radius-2xl);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--kl-shadow-strong);
 }
 
 .title {
   margin: 0;
-  color: var(--kl-text-primary);
-  font-size: var(--kl-text-h3);
-  font-weight: 600;
-  line-height: var(--kl-lh-body);
+  color: #101828;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
 }
 
 .fieldset {
@@ -36,16 +40,15 @@
 
 .progressSummary {
   margin: 0;
-  color: var(--kl-text-secondary);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body-short);
-  letter-spacing: var(--kl-ls-body);
+  color: #667085;
+  font-size: 0.94rem;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
 .list {
   display: grid;
-  gap: 1px;
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -54,24 +57,24 @@
 .row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(160px, 200px);
-  gap: var(--kl-space-3);
+  gap: 14px;
   align-items: center;
   min-width: 0;
-  padding: var(--kl-space-3) var(--kl-space-4);
-  background: var(--kl-bg);
-  border-bottom: var(--kl-border-subtle-line);
-  color: var(--kl-text-primary);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body);
-  letter-spacing: var(--kl-ls-body);
+  padding: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fbfdff 0%, #f6f9fd 100%);
+  color: #101828;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .rowAvailable {
-  background: var(--kl-surface-success);
+  background: linear-gradient(180deg, #ecfdf3 0%, #dcfae6 100%);
 }
 
 .rowCollectible {
-  background: var(--kl-surface-info);
+  background: linear-gradient(180deg, #eef6ff 0%, #e0eeff 100%);
 }
 
 .itemMain {
@@ -85,18 +88,18 @@
 .checkboxLabel {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: var(--kl-space-2);
+  gap: 8px;
   align-items: center;
   min-width: 0;
-  color: var(--kl-text-primary);
+  color: #101828;
   cursor: pointer;
 }
 
 .checkbox {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   margin: 0;
-  accent-color: var(--kl-primary);
+  accent-color: var(--kl-primary-strong);
   cursor: pointer;
 }
 
@@ -106,51 +109,56 @@
 }
 
 .checkboxText {
-  color: var(--kl-text-primary);
-  font-size: var(--kl-text-caption);
-  line-height: var(--kl-lh-caption);
-  letter-spacing: var(--kl-ls-caption);
+  color: #475467;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .evidenceLabel {
   min-width: 0;
-  color: var(--kl-text-primary);
+  color: #101828;
   overflow-wrap: anywhere;
 }
 
 .statusControl {
   display: grid;
-  gap: var(--kl-space-1);
+  gap: 6px;
   min-width: 0;
 }
 
 .statusLabel {
-  color: var(--kl-text-secondary);
-  font-size: var(--kl-text-caption);
-  line-height: var(--kl-lh-caption);
-  letter-spacing: var(--kl-ls-caption);
+  color: #475467;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .statusSelect {
   width: 100%;
   min-width: 0;
-  height: 40px;
-  padding: 0 var(--kl-space-4);
-  border: 0;
-  border-bottom: 2px solid var(--kl-border);
-  border-radius: var(--kl-radius-control);
-  background: var(--kl-surface-01);
-  color: var(--kl-text-primary);
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #101828;
   font-family: var(--kl-font-sans);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body-short);
-  letter-spacing: var(--kl-ls-body);
+  font-size: 0.94rem;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  appearance: none;
 }
 
 .statusSelect:focus {
   outline: none;
-  border-bottom-color: var(--kl-focus);
+  border-color: rgba(15, 98, 254, 0.42);
+  box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.12);
 }
 
 .statusSelect:focus-visible {
@@ -160,10 +168,9 @@
 
 .emptyText {
   margin: 0;
-  color: var(--kl-text-secondary);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body);
-  letter-spacing: var(--kl-ls-body);
+  color: #667085;
+  font-size: 0.95rem;
+  line-height: 1.7;
   overflow-wrap: anywhere;
 }
 

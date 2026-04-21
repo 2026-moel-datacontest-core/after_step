@@ -1,45 +1,57 @@
 .section {
   display: grid;
-  gap: var(--kl-space-4);
+  gap: 16px;
 }
 
 .header {
   display: grid;
-  gap: var(--kl-space-1);
+  gap: 6px;
+  padding: 22px 24px;
+  border-radius: var(--kl-radius-2xl);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--kl-shadow-strong);
 }
 
 .eyebrow {
   margin: 0;
-  color: var(--kl-text-secondary);
-  font-size: var(--kl-text-caption);
-  line-height: var(--kl-lh-caption);
-  letter-spacing: var(--kl-ls-caption);
+  color: #667085;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .title {
   margin: 0;
-  color: var(--kl-text-primary);
-  font-size: var(--kl-text-h2);
-  font-weight: 400;
-  line-height: var(--kl-lh-heading);
+  color: #101828;
+  font-size: clamp(1.55rem, 2.1vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
 }
 
 .paper {
   width: 100%;
   max-width: min(100%, var(--kl-document-width));
   min-width: 0;
-  border: var(--kl-border-default);
-  background: var(--kl-bg);
-  color: var(--kl-text-primary);
-  padding: var(--kl-space-6);
-  font-size: var(--kl-text-body-lg);
-  line-height: var(--kl-lh-document);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(15, 98, 254, 0.03), rgba(15, 98, 254, 0) 88px),
+    #ffffff;
+  color: #101828;
+  padding: 28px 24px;
+  box-shadow: 0 32px 72px rgba(15, 23, 42, 0.12);
+  font-size: 1rem;
+  line-height: 1.9;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 
 .placeholder {
-  color: var(--kl-text-danger);
+  color: #c22727;
+  font-weight: 700;
 }
 
 .printDisclaimer {
@@ -48,7 +60,7 @@
 
 @media (min-width: 672px) {
   .paper {
-    padding: var(--kl-space-12);
+    padding: 52px 56px;
   }
 }
 
@@ -70,11 +82,13 @@
     max-width: none;
     min-width: 0;
     border: 0;
+    border-radius: 0;
     padding: 0;
     background: #ffffff;
     color: #000000;
     font-size: 12pt;
     line-height: 1.7;
+    box-shadow: none;
     overflow-wrap: break-word;
   }
 

@@ -2,16 +2,19 @@
   position: sticky;
   top: 0;
   z-index: var(--kl-z-masthead);
-  height: var(--kl-masthead-height);
-  background: var(--kl-masthead-bg);
+  min-height: 72px;
+  background: rgba(7, 16, 31, 0.84);
+  backdrop-filter: blur(14px);
   color: var(--kl-text-on-dark);
+  box-shadow: 0 10px 30px rgba(3, 8, 18, 0.18);
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+  gap: var(--kl-space-4);
+  min-height: 72px;
   max-width: var(--kl-max-width);
   margin: 0 auto;
   padding: 0 var(--kl-margin-mobile);
@@ -20,13 +23,12 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--kl-space-3);
+  gap: 10px;
   min-width: 0;
-  min-height: var(--kl-masthead-height);
+  min-height: 72px;
   color: var(--kl-text-on-dark);
-  font-size: var(--kl-text-body);
-  font-weight: 600;
-  letter-spacing: var(--kl-ls-body);
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 .brand:hover {
@@ -34,44 +36,58 @@
   text-decoration: none;
 }
 
-.brand span:last-child {
+.brandText {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 1.2rem;
+}
+
+.brandSub {
+  margin-left: 6px;
+  color: rgba(244, 244, 244, 0.58);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--kl-text-on-dark);
-  font-family: var(--kl-font-mono);
-  font-size: var(--kl-text-mono-sm);
-  line-height: var(--kl-lh-caption);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--kl-primary), #3d70ff);
+  color: var(--kl-text-on-primary);
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  height: 100%;
+  min-height: 72px;
 }
 
 .nav a {
   display: inline-flex;
   align-items: center;
-  height: 100%;
-  padding: 0 var(--kl-space-4);
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(244, 244, 244, 0.16);
+  border-radius: 999px;
   color: var(--kl-text-on-dark);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body-short);
-  letter-spacing: var(--kl-ls-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
 }
 
 .nav a:hover {
   color: var(--kl-text-on-primary);
-  background: var(--kl-text-secondary);
+  background: rgba(244, 244, 244, 0.08);
+  border-color: rgba(244, 244, 244, 0.3);
   text-decoration: none;
 }
 
@@ -87,7 +103,8 @@
 
 .progress {
   width: 100%;
-  animation: progress var(--kl-duration-medium) var(--kl-ease-enter) infinite alternate;
+  background: linear-gradient(90deg, var(--kl-primary), #8bb4ff);
+  animation: progress 900ms var(--kl-ease-enter) infinite alternate;
 }
 
 .progressHidden {
