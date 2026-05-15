@@ -32,6 +32,10 @@ law-service-main-page-design/
 z_before_begin/
 
 # Local agent/tool state
+.codex
 .omx/
+config/cache/
+config/codex.sqlite3*
+config/secret_key
 frontend/.codex
 frontend/.omx/
