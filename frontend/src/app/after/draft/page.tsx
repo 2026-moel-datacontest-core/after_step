@@ -106,6 +106,10 @@ export default function AfterDraftPage() {
 
   const renderedText = draft.rendered_text;
   const hasRenderedText = renderedText.trim().length > 0;
+  const missingFieldCount = draft.missing_fields.length;
+  const cautionCount = draft.cautions.length;
+  const evidenceCount = draft.evidence_checklist.length;
+  const citationCount = draft.cited_articles.length;
   const copyStatusMessage =
     copyFeedback === 'success'
       ? '초안이 클립보드에 복사되었습니다.'
@@ -169,82 +173,130 @@ export default function AfterDraftPage() {
       />
       <Masthead />
       <main id="main-content" tabIndex={-1} className={styles.main}>
-        <section className={styles.headerBand} aria-labelledby="draft-title">
-          <div className={styles.shell}>
-            <p className={styles.eyebrow}>Step 4 · 문서 초안</p>
-            <h1 id="draft-title" ref={headingRef} tabIndex={-1} className={styles.title}>
-              생성된 초안을 검토하세요
-            </h1>
-            <div className={styles.metaGrid}>
-              <span className={styles.documentBadge}>
-                {DOCUMENT_TYPE_LABELS[draft.document_type]}
-              </span>
-              <span className={styles.metaItem}>제출 대상: {draft.recipient}</span>
+        <section className={styles.heroSection} aria-labelledby="draft-title">
+          <div className={styles.heroGlowPrimary} />
+          <div className={styles.heroGlowSecondary} />
+          <div className={styles.heroInner}>
+            <div className={styles.heroCopy}>
+              <p className={styles.eyebrow}>Step 4 · draft review</p>
+              <h1 id="draft-title" ref={headingRef} tabIndex={-1} className={styles.title}>
+                생성된 초안을 검토하세요
+              </h1>
+              <div className={styles.metaGrid}>
+                <span className={styles.documentBadge}>
+                  {DOCUMENT_TYPE_LABELS[draft.document_type]}
+                </span>
+                <span className={styles.metaItem}>제출 대상: {draft.recipient}</span>
+              </div>
+              <p className={styles.lead}>
+                초안 본문, 확인 필요 항목, 주의사항, 증거 체크리스트를 한 화면에서 검토할 수 있습니다.
+                복사 또는 인쇄 전에는 누락된 사실과 제출 기관을 한 번 더 확인하세요.
+              </p>
+
+              <div className={styles.summaryGrid} aria-label="초안 요약">
+                <div className={styles.summaryCard}>
+                  <span className={styles.summaryLabel}>확인 필요</span>
+                  <strong className={styles.summaryValue}>{missingFieldCount}</strong>
+                </div>
+                <div className={styles.summaryCard}>
+                  <span className={styles.summaryLabel}>주의사항</span>
+                  <strong className={styles.summaryValue}>{cautionCount}</strong>
+                </div>
+                <div className={styles.summaryCard}>
+                  <span className={styles.summaryLabel}>증거 항목</span>
+                  <strong className={styles.summaryValue}>{evidenceCount}</strong>
+                </div>
+                <div className={styles.summaryCard}>
+                  <span className={styles.summaryLabel}>인용 조문</span>
+                  <strong className={styles.summaryValue}>{citationCount}</strong>
+                </div>
+              </div>
             </div>
+
+            <aside className={styles.heroPanel} aria-label="검토 안내">
+              <div className={styles.heroPanelCard}>
+                <p className={styles.panelEyebrow}>Review checklist</p>
+                <h2 className={styles.panelTitle}>출력 전에 보면 좋은 것</h2>
+                <ul className={styles.panelList}>
+                  <li>표시된 `확인 필요` 항목이 실제 사실과 맞는지</li>
+                  <li>기관명, 날짜, 금액, 증거 설명이 빠지지 않았는지</li>
+                  <li>복사본 또는 출력본을 제출 전에 다시 읽었는지</li>
+                </ul>
+              </div>
+
+              <div className={styles.heroPanelStrip}>
+                <span className={styles.stripLabel}>Current path</span>
+                <p>`/after/result → /after/intake → /after/draft`</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <div className={styles.contentGrid}>
-          <section className={styles.previewColumn} aria-label="문서 초안 본문">
-            <div className={styles.screenDisclaimer}>
-              <DisclaimerBanner>
-                <p>이 문서는 제출 전 검토용 초안입니다. 사실관계와 제출 기관 안내를 확인하세요.</p>
-              </DisclaimerBanner>
-            </div>
-            <div className={styles.documentActions} aria-label="문서 초안 작업">
-              <div className={styles.actionGroup}>
-                <Button
-                  type="button"
-                  variant="tertiary"
-                  onClick={copyDraftText}
-                  disabled={!hasRenderedText}
-                  aria-describedby="copy-feedback"
-                >
-                  {copyButtonLabel}
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={printDraft}
-                  disabled={!hasRenderedText}
-                >
-                  인쇄하기
-                </Button>
+        <section className={styles.workspaceSection}>
+          <div className={styles.contentGrid}>
+            <section className={styles.previewColumn} aria-label="문서 초안 본문">
+              <div className={styles.screenDisclaimer}>
+                <DisclaimerBanner>
+                  <p>이 문서는 제출 전 검토용 초안입니다. 사실관계와 제출 기관 안내를 확인하세요.</p>
+                </DisclaimerBanner>
               </div>
-              <p
-                id="copy-feedback"
-                className={[
-                  styles.copyStatus,
-                  copyFeedback === 'success' ? styles.copyStatusSuccess : '',
-                  copyFeedback === 'error' ? styles.copyStatusError : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {copyStatusMessage}
-              </p>
-            </div>
-            <DocumentPreview
-              id="document-draft"
-              title={draft.title}
-              renderedText={renderedText}
-            />
-          </section>
 
-          <aside className={styles.sideColumn} aria-label="초안 확인 항목">
-            <MissingFieldsPanel missingFields={draft.missing_fields} />
-            <CautionsPanel cautions={draft.cautions} />
-            <EvidenceChecklist items={draft.evidence_checklist} />
-            <LegalBasisPanel
-              citedArticles={draft.cited_articles}
-              legalBasis={draft.legal_basis}
-              sourceContextIds={draft.source_context_ids}
-              missingLegalBasis={draft.missing_legal_basis}
-            />
-          </aside>
-        </div>
+              <div className={styles.documentActions} aria-label="문서 초안 작업">
+                <div className={styles.actionGroup}>
+                  <Button
+                    type="button"
+                    variant="tertiary"
+                    onClick={copyDraftText}
+                    disabled={!hasRenderedText}
+                    aria-describedby="copy-feedback"
+                  >
+                    {copyButtonLabel}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={printDraft}
+                    disabled={!hasRenderedText}
+                  >
+                    인쇄하기
+                  </Button>
+                </div>
+                <p
+                  id="copy-feedback"
+                  className={[
+                    styles.copyStatus,
+                    copyFeedback === 'success' ? styles.copyStatusSuccess : '',
+                    copyFeedback === 'error' ? styles.copyStatusError : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  {copyStatusMessage}
+                </p>
+              </div>
+
+              <DocumentPreview
+                id="document-draft"
+                title={draft.title}
+                renderedText={renderedText}
+              />
+            </section>
+
+            <aside className={styles.sideColumn} aria-label="초안 확인 항목">
+              <MissingFieldsPanel missingFields={draft.missing_fields} />
+              <CautionsPanel cautions={draft.cautions} />
+              <EvidenceChecklist items={draft.evidence_checklist} />
+              <LegalBasisPanel
+                citedArticles={draft.cited_articles}
+                legalBasis={draft.legal_basis}
+                sourceContextIds={draft.source_context_ids}
+                missingLegalBasis={draft.missing_legal_basis}
+              />
+            </aside>
+          </div>
+        </section>
 
         <div className={styles.actionBar}>
           <div className={styles.actionInner}>

@@ -1,11 +1,13 @@
 .banner {
-  border-left: 4px solid var(--kl-warning);
-  background: var(--kl-surface-warning);
-  color: var(--kl-text-warning);
-  padding: var(--kl-space-4);
-  font-size: var(--kl-text-body);
-  line-height: var(--kl-lh-body);
-  letter-spacing: var(--kl-ls-body);
+  border: 1px solid rgba(177, 123, 0, 0.16);
+  border-radius: var(--kl-radius-xl);
+  background:
+    linear-gradient(135deg, rgba(252, 244, 214, 0.95), rgba(255, 255, 255, 0.82));
+  color: #8a5a00;
+  padding: 20px 22px;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  box-shadow: var(--kl-shadow-soft);
 }
 
 .banner p {

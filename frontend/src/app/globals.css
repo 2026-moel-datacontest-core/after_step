@@ -9,6 +9,9 @@
   --kl-surface-info: #edf5ff;
   --kl-surface-success: #defbe6;
   --kl-surface-danger: #fff1f1;
+  --kl-surface-elevated: #ffffff;
+  --kl-surface-hero: #07101f;
+  --kl-surface-soft: #f5f7fb;
 
   /* Text */
   --kl-text-primary: #161616;
@@ -26,6 +29,7 @@
   --kl-primary-hover: #0353e9;
   --kl-primary-active: #002d9c;
   --kl-primary-light: #edf5ff;
+  --kl-primary-strong: #0b4dcc;
 
   /* Status */
   --kl-warning: #f1c21b;
@@ -95,8 +99,9 @@
   --kl-radius-control: 0px;
   --kl-radius-card: 0px;
   --kl-radius-pill: 24px;
-  --kl-radius-xl: 20px;
-  --kl-radius-2xl: 24px;
+  --kl-radius-lg: 20px;
+  --kl-radius-xl: 28px;
+  --kl-radius-2xl: 32px;
 
   /* Border styles */
   --kl-border-default: 1px solid var(--kl-border);
@@ -104,7 +109,8 @@
   --kl-focus-ring: 2px solid var(--kl-focus);
 
   /* Shadow */
-  --kl-shadow-strong: 0 24px 54px rgba(15, 29, 45, 0.12);
+  --kl-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+  --kl-shadow-strong: 0 24px 56px rgba(15, 23, 42, 0.12);
 
   /* Z-index */
   --kl-z-masthead: 100;

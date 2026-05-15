@@ -97,7 +97,7 @@ export default function AfterResultPage() {
     selectedDocumentType !== null &&
     eligibility.documentTypes[selectedDocumentType];
   const canProceedToDraftFlow = supportsDraft && hasGrounding && hasAvailableDocumentTypes;
-  const statementSummary = truncateText(state.user_statement || answer.query, 100);
+  const statementSummary = truncateText(state.user_statement || answer.query, 180);
   const canShowAnswer = hasGrounding;
 
   function selectDocumentType(documentType: DocumentType) {
@@ -138,187 +138,269 @@ export default function AfterResultPage() {
       <SkipLink />
       <Masthead />
       <main id="main-content" tabIndex={-1} className={styles.main}>
-        <section className={styles.summaryBand} aria-labelledby="result-title">
-          <div className={styles.shell}>
-            <p className={styles.eyebrow}>Step 2 · 검색 결과</p>
-            <h1 id="result-title" ref={headingRef} tabIndex={-1} className={styles.title}>
-              관련 조문과 다음 문서 유형을 확인하세요
-            </h1>
-            <p className={styles.summaryText}>{statementSummary}</p>
+        <section className={styles.heroSection} aria-labelledby="result-title">
+          <div className={styles.heroGlowPrimary} />
+          <div className={styles.heroGlowSecondary} />
+          <div className={styles.heroInner}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroEyebrow}>Step 2 · grounded result</p>
+              <h1 id="result-title" ref={headingRef} tabIndex={-1} className={styles.title}>
+                관련 조문과 다음 문서 유형을 확인하세요
+              </h1>
+              <p className={styles.summaryText}>{statementSummary}</p>
+
+              <div className={styles.heroStats} aria-label="현재 answer 상태">
+                <div className={styles.statCard}>
+                  <strong>{answer.cited_articles.length}</strong>
+                  <span>cited articles</span>
+                </div>
+                <div className={styles.statCard}>
+                  <strong>{answer.grounded_context_ids.length}</strong>
+                  <span>grounded contexts</span>
+                </div>
+                <div className={styles.statCard}>
+                  <strong>{availableDocumentTypes.length}</strong>
+                  <span>draftable document types</span>
+                </div>
+              </div>
+            </div>
+
+            <aside className={styles.heroPanel} aria-label="결과 요약">
+              <div className={styles.heroPanelCard}>
+                <p className={styles.panelEyebrow}>Current state</p>
+                <h2 className={styles.panelTitle}>
+                  {canShowAnswer ? '근거 기반 answer를 확인했습니다' : '근거 확인이 더 필요합니다'}
+                </h2>
+                <ul className={styles.panelList}>
+                  <li>{hasCitedArticles ? '인용 조문이 확인되었습니다.' : '인용 조문이 아직 없습니다.'}</li>
+                  <li>
+                    {hasGrounding
+                      ? 'grounded context가 있어 다음 문서 단계 판단이 가능합니다.'
+                      : 'grounded context가 없어 문서 초안 단계로 이어지지 않습니다.'}
+                  </li>
+                  <li>
+                    {supportsDraft
+                      ? '현재 preset/free input 기준으로 SCN-004 문서 초안 guard를 적용합니다.'
+                      : '현재 preset은 answer 확인 전용으로 동작합니다.'}
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.heroPanelStrip}>
+                <span className={styles.stripLabel}>Selected preset</span>
+                <p>{activePreset ? activePreset.label : 'free input path'}</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <div className={styles.contentGrid}>
-          <section className={styles.resultColumn} aria-label="법 조문 검색 결과">
-            {!canShowAnswer ? (
-              <Notification variant="warning" title="근거 확인 필요">
-                <p>
-                  인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 답변을 표시하지
-                  않습니다. 입력을 보완해 다시 검색해주세요.
-                </p>
-              </Notification>
-            ) : (
-              <>
-                <details className={styles.answerBlock} open>
-                  <summary className={styles.answerSummary}>답변</summary>
-                  <div className={styles.answerBody}>
-                    {answer.answer.trim().length > 0 ? (
-                      <p>{answer.answer}</p>
-                    ) : (
-                      <p>답변 본문을 생성하지 못했습니다.</p>
-                    )}
-                  </div>
-                </details>
-
-                <section className={styles.section} aria-labelledby="key-points-title">
-                  <h2 id="key-points-title" className={styles.sectionTitle}>
-                    핵심 포인트
-                  </h2>
-                  {answer.key_points.length > 0 ? (
-                    <ul className={styles.list}>
-                      {answer.key_points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className={styles.emptyText}>표시할 핵심 포인트가 없습니다.</p>
-                  )}
-                </section>
-
-                <section className={styles.cautionSection} aria-labelledby="cautions-title">
-                  <h2 id="cautions-title" className={styles.sectionTitle}>
-                    주의사항
-                  </h2>
-                  {answer.cautions.length > 0 ? (
-                    <ul className={styles.list}>
-                      {answer.cautions.map((caution) => (
-                        <li key={caution}>{caution}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className={styles.emptyText}>추가 주의사항이 없습니다.</p>
-                  )}
-                </section>
-              </>
-            )}
-
-            <section className={styles.section} aria-labelledby="citations-title">
-              <h2 id="citations-title" className={styles.sectionTitle}>
-                인용 조문
-              </h2>
-              {hasCitedArticles ? (
-                <div className={styles.citationList}>
-                  {answer.cited_articles.map((article) => (
-                    <CitationPill key={article} label={article} />
-                  ))}
-                </div>
-              ) : (
-                <p className={styles.emptyText}>확인된 인용 조문이 없습니다.</p>
-              )}
-            </section>
-
-            {hasGrounding && activePreset && !activePreset.supportsDraft ? (
-              <Notification variant="warning" title="답변 확인 전용 프리셋">
-                <p>
-                  이 프리셋은 현재 답변 확인 전용입니다. SCN-004 문서 초안 선택지는
-                  표시하지 않습니다.
-                </p>
-              </Notification>
-            ) : null}
-
-            {hasGrounding && supportsDraft && !hasAvailableDocumentTypes ? (
-              <Notification variant="warning" title="현재 문서 초안 지원 범위 밖">
-                <p>
-                  답변은 확인할 수 있지만, 현재 문서 초안은 SCN-004의 해고·서면통지·해고예고·노동위원회·임금체불·퇴직금·금품청산 범위에서만 지원합니다.
-                </p>
-              </Notification>
-            ) : null}
-
-            {!hasGrounding ? (
-              <Notification variant="warning" title="문서 초안 진행 불가">
-                <p>
-                  인용된 법 조문 또는 근거 컨텍스트가 확인되지 않았습니다. 문서 초안을 만들 수
-                  없습니다.
-                </p>
-              </Notification>
-            ) : null}
-
-            <DisclaimerBanner />
-          </section>
-
-          <aside className={styles.selectorColumn} aria-labelledby="document-type-title">
-            <section className={styles.selectorPanel}>
-              <p className={styles.eyebrow}>문서 유형</p>
-              <h2 id="document-type-title" className={styles.selectorTitle}>
-                다음 단계에서 만들 문서를 선택하세요
-              </h2>
-              {canProceedToDraftFlow ? (
-                <div
-                  className={styles.radioGroup}
-                  role="radiogroup"
-                  aria-labelledby="document-type-title"
-                >
-                  {availableDocumentTypes.map((documentType) => {
-                    const isSelected = selectedDocumentType === documentType.value;
-
-                    return (
-                      <div
-                        key={documentType.value}
-                        className={isSelected ? styles.radioTileSelected : styles.radioTile}
-                        role="radio"
-                        aria-checked={isSelected}
-                        tabIndex={0}
-                        onClick={() => selectDocumentType(documentType.value)}
-                        onKeyDown={(event) => handleTileKeyDown(event, documentType.value)}
-                      >
-                        <span className={styles.radioMarker} aria-hidden="true" />
-                        <span className={styles.radioText}>
-                          <span className={styles.radioTitle}>{documentType.title}</span>
-                          <span className={styles.radioSubtitle}>{documentType.subtitle}</span>
-                          <span className={styles.radioBody}>{documentType.body}</span>
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <Notification
-                  variant="warning"
-                  title={
-                    activePreset && !activePreset.supportsDraft
-                      ? '답변 확인 전용 프리셋'
-                      : hasGrounding
-                      ? '현재 문서 초안 지원 범위 밖'
-                      : '문서 초안 진행 불가'
-                  }
-                >
+        <section className={styles.workspaceSection}>
+          <div className={styles.contentGrid}>
+            <section className={styles.resultColumn} aria-label="법 조문 검색 결과">
+              {!canShowAnswer ? (
+                <Notification variant="warning" title="근거 확인 필요">
                   <p>
-                    {activePreset && !activePreset.supportsDraft
-                      ? '이 프리셋은 현재 답변 확인 전용입니다.'
-                      : hasGrounding
-                      ? '이 답변은 확인할 수 있지만 SCN-004 문서 초안으로 이어지지 않습니다.'
-                      : '인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 문서 유형을 선택할 수 없습니다.'}
+                    인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 답변을 표시하지
+                    않습니다. 입력을 보완해 다시 검색해주세요.
                   </p>
                 </Notification>
+              ) : (
+                <>
+                  <section className={styles.answerCard} aria-labelledby="answer-title">
+                    <div className={styles.cardHeader}>
+                      <div>
+                        <p className={styles.sectionEyebrow}>Answer</p>
+                        <h2 id="answer-title" className={styles.sectionTitle}>
+                          답변
+                        </h2>
+                      </div>
+                    </div>
+                    <div className={styles.answerBody}>
+                      {answer.answer.trim().length > 0 ? (
+                        <p>{answer.answer}</p>
+                      ) : (
+                        <p>답변 본문을 생성하지 못했습니다.</p>
+                      )}
+                    </div>
+                  </section>
+
+                  <section className={styles.infoCard} aria-labelledby="key-points-title">
+                    <div className={styles.cardHeader}>
+                      <div>
+                        <p className={styles.sectionEyebrow}>Key points</p>
+                        <h2 id="key-points-title" className={styles.sectionTitle}>
+                          핵심 포인트
+                        </h2>
+                      </div>
+                    </div>
+                    {answer.key_points.length > 0 ? (
+                      <ul className={styles.list}>
+                        {answer.key_points.map((point) => (
+                          <li key={point}>{point}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={styles.emptyText}>표시할 핵심 포인트가 없습니다.</p>
+                    )}
+                  </section>
+
+                  <section className={styles.cautionCard} aria-labelledby="cautions-title">
+                    <div className={styles.cardHeader}>
+                      <div>
+                        <p className={styles.sectionEyebrow}>Cautions</p>
+                        <h2 id="cautions-title" className={styles.sectionTitle}>
+                          주의사항
+                        </h2>
+                      </div>
+                    </div>
+                    {answer.cautions.length > 0 ? (
+                      <ul className={styles.list}>
+                        {answer.cautions.map((caution) => (
+                          <li key={caution}>{caution}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={styles.emptyText}>추가 주의사항이 없습니다.</p>
+                    )}
+                  </section>
+                </>
               )}
 
-              <Button
-                type="button"
-                fullWidth
-                disabled={
-                  !selectedDocumentTypeIsAvailable || !canProceedToDraftFlow || isNavigating
-                }
-                isLoading={isNavigating}
-                onClick={handleNextClick}
-              >
-                사건 정보 입력하기 →
-              </Button>
-              <Button type="button" variant="ghost" fullWidth onClick={resetFlow}>
-                처음으로 돌아가기
-              </Button>
+              <section className={styles.infoCard} aria-labelledby="citations-title">
+                <div className={styles.cardHeader}>
+                  <div>
+                    <p className={styles.sectionEyebrow}>Cited articles</p>
+                    <h2 id="citations-title" className={styles.sectionTitle}>
+                      인용 조문
+                    </h2>
+                  </div>
+                </div>
+                {hasCitedArticles ? (
+                  <div className={styles.citationList}>
+                    {answer.cited_articles.map((article) => (
+                      <CitationPill key={article} label={article} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className={styles.emptyText}>확인된 인용 조문이 없습니다.</p>
+                )}
+              </section>
+
+              {hasGrounding && activePreset && !activePreset.supportsDraft ? (
+                <Notification variant="warning" title="답변 확인 전용 프리셋">
+                  <p>
+                    이 프리셋은 현재 답변 확인 전용입니다. SCN-004 문서 초안 선택지는
+                    표시하지 않습니다.
+                  </p>
+                </Notification>
+              ) : null}
+
+              {hasGrounding && supportsDraft && !hasAvailableDocumentTypes ? (
+                <Notification variant="warning" title="현재 문서 초안 지원 범위 밖">
+                  <p>
+                    답변은 확인할 수 있지만, 현재 문서 초안은 SCN-004의 해고·서면통지·해고예고·노동위원회·임금체불·퇴직금·금품청산 범위에서만 지원합니다.
+                  </p>
+                </Notification>
+              ) : null}
+
+              {!hasGrounding ? (
+                <Notification variant="warning" title="문서 초안 진행 불가">
+                  <p>
+                    인용된 법 조문 또는 근거 컨텍스트가 확인되지 않았습니다. 문서 초안을 만들 수
+                    없습니다.
+                  </p>
+                </Notification>
+              ) : null}
             </section>
-          </aside>
-        </div>
+
+            <aside className={styles.selectorColumn} aria-labelledby="document-type-title">
+              <section className={styles.selectorPanel}>
+                <div className={styles.selectorHeader}>
+                  <div>
+                    <p className={styles.sectionEyebrow}>Draft flow</p>
+                    <h2 id="document-type-title" className={styles.selectorTitle}>
+                      다음 단계에서 만들 문서를 선택하세요
+                    </h2>
+                  </div>
+                </div>
+
+                {canProceedToDraftFlow ? (
+                  <div
+                    className={styles.radioGroup}
+                    role="radiogroup"
+                    aria-labelledby="document-type-title"
+                  >
+                    {availableDocumentTypes.map((documentType) => {
+                      const isSelected = selectedDocumentType === documentType.value;
+
+                      return (
+                        <div
+                          key={documentType.value}
+                          className={isSelected ? styles.radioTileSelected : styles.radioTile}
+                          role="radio"
+                          aria-checked={isSelected}
+                          tabIndex={0}
+                          onClick={() => selectDocumentType(documentType.value)}
+                          onKeyDown={(event) => handleTileKeyDown(event, documentType.value)}
+                        >
+                          <span className={styles.radioMarker} aria-hidden="true" />
+                          <span className={styles.radioText}>
+                            <span className={styles.radioTitle}>{documentType.title}</span>
+                            <span className={styles.radioSubtitle}>{documentType.subtitle}</span>
+                            <span className={styles.radioBody}>{documentType.body}</span>
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Notification
+                    variant="warning"
+                    title={
+                      activePreset && !activePreset.supportsDraft
+                        ? '답변 확인 전용 프리셋'
+                        : hasGrounding
+                          ? '현재 문서 초안 지원 범위 밖'
+                          : '문서 초안 진행 불가'
+                    }
+                  >
+                    <p>
+                      {activePreset && !activePreset.supportsDraft
+                        ? '이 프리셋은 현재 답변 확인 전용입니다.'
+                        : hasGrounding
+                          ? '이 답변은 확인할 수 있지만 SCN-004 문서 초안으로 이어지지 않습니다.'
+                          : '인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 문서 유형을 선택할 수 없습니다.'}
+                    </p>
+                  </Notification>
+                )}
+
+                <div className={styles.selectorActions}>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    fullWidth
+                    disabled={
+                      !selectedDocumentTypeIsAvailable || !canProceedToDraftFlow || isNavigating
+                    }
+                    isLoading={isNavigating}
+                    onClick={handleNextClick}
+                  >
+                    사건 정보 입력하기 →
+                  </Button>
+                  <Button type="button" variant="ghost" fullWidth onClick={resetFlow}>
+                    처음으로 돌아가기
+                  </Button>
+                </div>
+
+                <DisclaimerBanner>
+                  <p>
+                    문서 초안은 answer에서 확인된 근거와 다음 단계의 사건 정보를 바탕으로만
+                    생성됩니다.
+                  </p>
+                </DisclaimerBanner>
+              </section>
+            </aside>
+          </div>
+        </section>
       </main>
     </>
   );

@@ -62,15 +62,11 @@ export default function AfterIntakePage() {
   );
   const [incidentTimeline, setIncidentTimeline] = useState<TimelineRow[]>(() =>
     ensureTimelineRowIds(
-      state.case_intake?.incident_timeline.length
-        ? state.case_intake.incident_timeline
-        : [],
+      state.case_intake?.incident_timeline.length ? state.case_intake.incident_timeline : [],
     ),
   );
   const [evidenceItems, setEvidenceItems] = useState<EvidenceItemRow[]>(() =>
-    ensureEvidenceRowIds(
-      state.case_intake?.evidence_items.length ? state.case_intake.evidence_items : [],
-    ),
+    ensureEvidenceRowIds(state.case_intake?.evidence_items.length ? state.case_intake.evidence_items : []),
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorState, setErrorState] = useState<DraftErrorState | null>(null);
@@ -85,14 +81,7 @@ export default function AfterIntakePage() {
       router.replace('/after/result');
       return;
     }
-  }, [
-    answer,
-    hasGrounding,
-    router,
-    selectedDocumentType,
-    selectedDocumentTypeIsEligible,
-    supportsDraft,
-  ]);
+  }, [answer, hasGrounding, router, selectedDocumentType, selectedDocumentTypeIsEligible, supportsDraft]);
 
   useEffect(() => {
     if (answer && selectedDocumentType && canUseDraftFlow) {
@@ -125,8 +114,7 @@ export default function AfterIntakePage() {
 
     if (!hasDraftGrounding(answer)) {
       setErrorState({
-        message:
-          '인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 문서 초안을 만들 수 없습니다.',
+        message: '인용된 법 조문 또는 근거 컨텍스트가 확인되지 않아 문서 초안을 만들 수 없습니다.',
         retryable: false,
       });
       return;
@@ -144,8 +132,7 @@ export default function AfterIntakePage() {
 
     if (!selectedEligibility.documentTypes[selectedDocumentType]) {
       setErrorState({
-        message:
-          '선택한 문서 타입을 뒷받침하는 SCN-004 근거가 없어 문서 초안을 만들 수 없습니다.',
+        message: '선택한 문서 타입을 뒷받침하는 SCN-004 근거가 없어 문서 초안을 만들 수 없습니다.',
         retryable: false,
       });
       return;
@@ -177,9 +164,7 @@ export default function AfterIntakePage() {
       router.push('/after/draft');
     } catch (error) {
       const message =
-        error instanceof ApiError
-          ? error.message
-          : '연결을 확인하고 다시 시도해주세요.';
+        error instanceof ApiError ? error.message : '연결을 확인하고 다시 시도해주세요.';
       const retryable = error instanceof ApiError ? error.retryable : true;
 
       setErrorState({ message, retryable });
@@ -219,56 +204,96 @@ export default function AfterIntakePage() {
       <SkipLink />
       <Masthead isLoading={isSubmitting} />
       <main id="main-content" tabIndex={-1} className={styles.main}>
-        <section className={styles.headerBand} aria-labelledby="intake-title">
-          <div className={styles.shell}>
-            <p className={styles.eyebrow}>Step 3 · 사건 정보 입력</p>
-            <h1 id="intake-title" ref={headingRef} tabIndex={-1} className={styles.title}>
-              초안에 반영할 정보를 선택적으로 입력하세요
-            </h1>
-            <div className={styles.badgeRow}>
-              <span className={styles.documentBadge}>{documentTypeLabel}</span>
+        <section className={styles.heroSection} aria-labelledby="intake-title">
+          <div className={styles.heroGlowPrimary} />
+          <div className={styles.heroGlowSecondary} />
+          <div className={styles.heroInner}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroEyebrow}>Step 3 · case intake</p>
+              <h1 id="intake-title" ref={headingRef} tabIndex={-1} className={styles.title}>
+                초안에 반영할 정보를 선택적으로 입력하세요
+              </h1>
+              <div className={styles.badgeRow}>
+                <span className={styles.documentBadge}>{documentTypeLabel}</span>
+              </div>
+              <p className={styles.lead}>
+                빈 항목은 제출을 막지 않습니다. 확인이 필요한 부분은 초안 결과에서 따로 표시됩니다.
+              </p>
             </div>
-            <p className={styles.lead}>
-              빈 항목은 제출을 막지 않습니다. 확인이 필요한 부분은 초안 결과에서 따로
-              표시됩니다.
-            </p>
+
+            <aside className={styles.heroPanel} aria-label="입력 원칙">
+              <div className={styles.heroPanelCard}>
+                <p className={styles.panelEyebrow}>Input principles</p>
+                <h2 className={styles.panelTitle}>현재 단계에서 기억할 점</h2>
+                <ul className={styles.panelList}>
+                  <li>입력하지 않은 사실은 자동 확정하지 않습니다.</li>
+                  <li>사건 경위와 증거 목록은 제출 전 정리에 도움이 됩니다.</li>
+                  <li>초안은 다음 단계에서 `missing_fields`와 함께 검토됩니다.</li>
+                </ul>
+              </div>
+              <div className={styles.heroPanelStrip}>
+                <span className={styles.stripLabel}>Current path</span>
+                <p>`/after/result → /after/intake → /after/draft`</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <form
-          className={styles.form}
-          onSubmit={handleSubmit}
-          aria-busy={isSubmitting || undefined}
-        >
-          <div className={isSubmitting ? styles.formContentDisabled : styles.formContent}>
-            {selectedDocumentType === 'labor_office_wage_complaint' ? (
-              <WageComplaintForm
-                values={formValues}
-                disabled={isSubmitting}
-                onChange={handleFormValuesChange}
-              />
-            ) : (
-              <UnfairDismissalForm
-                values={formValues}
-                disabled={isSubmitting}
-                onChange={handleFormValuesChange}
-              />
-            )}
+        <form className={styles.form} onSubmit={handleSubmit} aria-busy={isSubmitting || undefined}>
+          <div className={styles.workspaceSection}>
+            <div className={styles.workspaceInner}>
+              <div className={isSubmitting ? styles.formContentDisabled : styles.formContent}>
+                {selectedDocumentType === 'labor_office_wage_complaint' ? (
+                  <WageComplaintForm
+                    values={formValues}
+                    disabled={isSubmitting}
+                    onChange={handleFormValuesChange}
+                  />
+                ) : (
+                  <UnfairDismissalForm
+                    values={formValues}
+                    disabled={isSubmitting}
+                    onChange={handleFormValuesChange}
+                  />
+                )}
 
-            <EvidenceSection
-              evidenceItems={evidenceItems}
-              incidentTimeline={incidentTimeline}
-              disabled={isSubmitting}
-              onEvidenceItemsChange={handleEvidenceItemsChange}
-              onIncidentTimelineChange={handleIncidentTimelineChange}
-            />
+                <EvidenceSection
+                  evidenceItems={evidenceItems}
+                  incidentTimeline={incidentTimeline}
+                  disabled={isSubmitting}
+                  onEvidenceItemsChange={handleEvidenceItemsChange}
+                  onIncidentTimelineChange={handleIncidentTimelineChange}
+                />
 
-            <DisclaimerBanner>
-              <p>
-                이 문서 초안은 제출 전 검토용입니다. 입력하지 않은 사실은 확정하지 않고
-                확인 필요 항목으로 남깁니다.
-              </p>
-            </DisclaimerBanner>
+                <DisclaimerBanner>
+                  <p>
+                    이 문서 초안은 제출 전 검토용입니다. 입력하지 않은 사실은 확정하지 않고 확인 필요 항목으로 남깁니다.
+                  </p>
+                </DisclaimerBanner>
+              </div>
+
+              <aside className={styles.supportColumn} aria-label="입력 지원 정보">
+                <section className={styles.supportCard}>
+                  <p className={styles.sectionEyebrow}>What helps most</p>
+                  <h2 className={styles.supportTitle}>특히 채우면 좋은 정보</h2>
+                  <ul className={styles.supportList}>
+                    <li>입사일, 마지막 근무일, 통보일</li>
+                    <li>미지급 금액이나 지급일 같은 수치 정보</li>
+                    <li>메신저, 계약서, 급여명세서 같은 증거 자료</li>
+                  </ul>
+                </section>
+
+                <section className={styles.supportCard}>
+                  <p className={styles.sectionEyebrow}>Next step</p>
+                  <h2 className={styles.supportTitle}>이후 생성되는 결과</h2>
+                  <ul className={styles.supportList}>
+                    <li>rendered_text 초안 본문</li>
+                    <li>missing_fields와 cautions</li>
+                    <li>evidence_checklist와 cited_articles</li>
+                  </ul>
+                </section>
+              </aside>
+            </div>
           </div>
 
           <div className={styles.stickyBar}>
@@ -287,15 +312,10 @@ export default function AfterIntakePage() {
                 ) : null}
               </div>
               <div className={styles.actions}>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  disabled={isSubmitting}
-                  onClick={resetFlow}
-                >
+                <Button type="button" variant="ghost" disabled={isSubmitting} onClick={resetFlow}>
                   처음으로 돌아가기
                 </Button>
-                <Button type="submit" isLoading={isSubmitting} disabled={isSubmitting}>
+                <Button type="submit" variant="secondary" isLoading={isSubmitting} disabled={isSubmitting}>
                   문서 초안 생성하기 →
                 </Button>
               </div>

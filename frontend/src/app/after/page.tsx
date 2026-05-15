@@ -156,69 +156,132 @@ export default function AfterPage() {
       <SkipLink />
       <Masthead isLoading={isLoading} />
       <main id="main-content" ref={mainRef} tabIndex={-1} className={styles.main}>
-        <section className={styles.intro} aria-labelledby="after-title">
-          <div className={styles.introInner}>
-            <p className={styles.eyebrow}>After flow · Scenario presets</p>
-            <h1 id="after-title" className={styles.title}>
-              상황에 맞는 노동권 조문 찾기
-            </h1>
-            <p className={styles.lead}>
-              현재 상황을 적으면 관련 조문과 주의사항을 먼저 확인합니다.
-            </p>
+        <section className={styles.heroSection} aria-labelledby="after-title">
+          <div className={styles.heroGlowPrimary} />
+          <div className={styles.heroGlowSecondary} />
+          <div className={styles.heroInner}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroEyebrow}>After flow · grounded answer</p>
+              <h1 id="after-title" className={styles.title}>
+                지금 상황을 적으면
+                <br />
+                관련 조문과 초안 작성 가능 여부를 먼저 확인합니다
+              </h1>
+              <p className={styles.lead}>
+                해고, 임금, 퇴직금, 사업장 변경처럼 핵심 사실을 적어주세요. 현재 구현은
+                SCN-004 문서 초안 흐름을 중심으로 연결됩니다.
+              </p>
+
+              <div className={styles.heroStats} aria-label="현재 흐름 특징">
+                <div className={styles.statCard}>
+                  <strong>Step 1</strong>
+                  <span>상황 입력과 preset 시작</span>
+                </div>
+                <div className={styles.statCard}>
+                  <strong>Answer</strong>
+                  <span>cited articles와 cautions 확인</span>
+                </div>
+                <div className={styles.statCard}>
+                  <strong>Draft</strong>
+                  <span>가능한 경우 문서 초안으로 이어짐</span>
+                </div>
+              </div>
+            </div>
+
+            <aside className={styles.heroPanel} aria-label="지원 범위 안내">
+              <div className={styles.heroPanelCard}>
+                <p className={styles.panelEyebrow}>Current support</p>
+                <h2 className={styles.panelTitle}>현재 바로 확인 가능한 흐름</h2>
+                <ul className={styles.panelList}>
+                  <li>근거 기반 answer와 cited articles</li>
+                  <li>SCN-004 문서 초안 eligibility guard</li>
+                  <li>고용노동청 진정서 / 노동위원회 이유서 초안</li>
+                </ul>
+              </div>
+              <div className={styles.heroPanelStrip}>
+                <span className={styles.stripLabel}>Live path</span>
+                <p>`/after → /after/result → /after/intake → /after/draft`</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <section className={styles.formBand} aria-labelledby="statement-title">
-          <div className={styles.formShell}>
+        <section className={styles.workspaceSection} aria-labelledby="statement-title">
+          <div className={styles.workspaceInner}>
             <form
-              className={styles.form}
+              className={styles.formCard}
               onSubmit={handleSubmit}
               aria-busy={isLoading || undefined}
             >
               <div className={styles.formHeader}>
                 <div>
-                  <p className={styles.eyebrow}>Step 1</p>
+                  <p className={styles.sectionEyebrow}>Step 1</p>
                   <h2 id="statement-title" className={styles.sectionTitle}>
                     상황 입력
                   </h2>
+                  <p className={styles.sectionBody}>
+                    지금 겪은 상황을 자연스럽게 적어주세요. 빈틈 없이 쓰지 않아도 되고,
+                    핵심 사실만 있어도 됩니다.
+                  </p>
                 </div>
                 <span className={styles.counter}>{characterCount}자</span>
               </div>
 
-              <label className={styles.label} htmlFor="statement">
-                한국어 진술
-              </label>
-              <textarea
-                id="statement"
-                ref={textareaRef}
-                className={styles.textarea}
-                value={statement}
-                onChange={(event) => handleStatementChange(event.target.value)}
-                disabled={isLoading}
-                aria-label="노동권 상황 진술"
-                aria-describedby="statement-helper"
-                placeholder="예: 회사에서 갑자기 그만 나오라고 했고 서면통지는 받지 못했습니다. 마지막 임금과 퇴직금도 아직 받지 못했습니다."
-              />
-              <p
-                id="statement-helper"
-                className={isShort ? styles.warningText : styles.helperText}
-              >
-                {helperText}
-              </p>
+              <div className={styles.fieldBlock}>
+                <label className={styles.label} htmlFor="statement">
+                  한국어 진술
+                </label>
+                <textarea
+                  id="statement"
+                  ref={textareaRef}
+                  className={styles.textarea}
+                  value={statement}
+                  onChange={(event) => handleStatementChange(event.target.value)}
+                  disabled={isLoading}
+                  aria-label="노동권 상황 진술"
+                  aria-describedby="statement-helper"
+                  placeholder="예: 회사에서 갑자기 그만 나오라고 했고 서면통지는 받지 못했습니다. 마지막 임금과 퇴직금도 아직 받지 못했습니다."
+                />
+                <p
+                  id="statement-helper"
+                  className={isShort ? styles.warningText : styles.helperText}
+                >
+                  {helperText}
+                </p>
+              </div>
 
-              <div className={styles.presetRow}>
-                {SCENARIO_PRESETS.map((preset) => (
-                  <Button
-                    key={preset.id}
-                    type="button"
-                    variant={selectedPresetId === preset.id ? 'secondary' : 'ghost'}
-                    onClick={() => handlePresetClick(preset.id)}
-                    disabled={isLoading}
-                    aria-pressed={selectedPresetId === preset.id}
-                  >
-                    {preset.label}
-                  </Button>
-                ))}
+              <div className={styles.presetBlock}>
+                <div className={styles.blockHeader}>
+                  <div>
+                    <p className={styles.sectionEyebrow}>Presentation preset</p>
+                    <h3 className={styles.blockTitle}>바로 시작할 수 있는 예시 흐름</h3>
+                  </div>
+                  <span className={styles.blockMeta}>exact preset path 지원</span>
+                </div>
+
+                <div className={styles.presetGrid}>
+                  {SCENARIO_PRESETS.map((preset) => {
+                    const isSelected = selectedPresetId === preset.id;
+                    return (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        className={isSelected ? styles.presetCardActive : styles.presetCard}
+                        onClick={() => handlePresetClick(preset.id)}
+                        disabled={isLoading}
+                        aria-pressed={isSelected}
+                      >
+                        <span className={styles.presetBadge}>{preset.scenarioId}</span>
+                        <strong className={styles.presetTitle}>{preset.label}</strong>
+                        <span className={styles.presetDescription}>
+                          {preset.supportsDraft
+                            ? 'answer 확인 후 document draft flow까지 이어지는 preset입니다.'
+                            : 'answer 확인 전용 preset으로, 결과 화면까지만 이어집니다.'}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {errorState ? (
@@ -243,12 +306,57 @@ export default function AfterPage() {
                 </Button>
               </div>
             </form>
+
+            <aside className={styles.supportColumn} aria-label="입력 안내">
+              <section className={styles.supportCard}>
+                <p className={styles.sectionEyebrow}>Writing tips</p>
+                <h2 className={styles.supportTitle}>이렇게 적으면 바로 분석하기 좋아요</h2>
+                <ul className={styles.supportList}>
+                  <li>언제 통보를 받았는지</li>
+                  <li>서면통지 여부나 메시지 기록이 있는지</li>
+                  <li>임금, 퇴직금, 마지막 근무일 같은 핵심 사실</li>
+                </ul>
+              </section>
+
+              <section className={styles.supportCard}>
+                <p className={styles.sectionEyebrow}>Current demo scope</p>
+                <h2 className={styles.supportTitle}>현재 데모에서 바로 이어지는 문서</h2>
+                <ul className={styles.supportList}>
+                  <li>고용노동청 임금체불 진정서 초안</li>
+                  <li>노동위원회 부당해고 구제신청 이유서 초안</li>
+                </ul>
+              </section>
+
+              <DisclaimerBanner>
+                <p>
+                  이 단계에서는 answer와 cited articles를 먼저 확인합니다. 문서 초안은
+                  근거가 확인된 경우에만 다음 단계에서 열립니다.
+                </p>
+              </DisclaimerBanner>
+            </aside>
           </div>
         </section>
 
-        <section className={styles.disclaimerBand}>
-          <div className={styles.formShell}>
-            <DisclaimerBanner />
+        <section className={styles.bottomSection}>
+          <div className={styles.bottomInner}>
+            <div className={styles.bottomCard}>
+              <p className={styles.sectionEyebrow}>What happens next</p>
+              <h2 className={styles.bottomTitle}>입력 후에는 이런 순서로 이어집니다</h2>
+              <div className={styles.bottomSteps}>
+                <div className={styles.stepCard}>
+                  <strong>01</strong>
+                  <span>answer, key points, cautions 확인</span>
+                </div>
+                <div className={styles.stepCard}>
+                  <strong>02</strong>
+                  <span>문서 유형 선택 가능 여부 판단</span>
+                </div>
+                <div className={styles.stepCard}>
+                  <strong>03</strong>
+                  <span>case intake 입력 후 초안 생성</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
