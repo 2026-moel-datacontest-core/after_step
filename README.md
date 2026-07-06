@@ -1,5 +1,11 @@
 # K-Labor Shield
 
+> [!NOTE]
+> 이 저장소는 **법대로(LawMainRoad)** 의 RAG 개선 단계 작업 저장소입니다.
+> 법령 검색(retrieval)·grounded answer 평가 체계와 문서 초안(SCN-004) 흐름을 다듬은 기록이며,
+> 프로젝트 전체 소개는 [메인 저장소 law_main_road_main](https://github.com/2026-moel-datacontest-core/law_main_road_main) · [공개 데모](https://www.law-main-road.cloud) · [프로젝트 Wiki](https://github.com/Team-msp-architect-2026/msp-team02/wiki) · [포트폴리오 상세 페이지](https://kjw-cloud-portfolio.vercel.app/projects/law-main-road)를 참고하세요.
+> 아래 본문은 2026-04-20 기준으로 동결된 당시 작업 기록입니다 — "다음 작업" 등의 계획 서술은 그 시점 기준입니다.
+
 외국인 근로자를 포함한 취약 노동자를 위한 노동권 보호 통합 AI MVP입니다.  
 현재 저장소 기준으로는 `retrieval + grounded answer generation + RAG refinement + SCN-004 문서 초안 backend + SCN-004 After frontend demo flow + presentation-local fixed answer preset + demo preflight + item-level eval evidence`까지 구현된 상태입니다.
 `SCN-004` QA 정합성 검증, content output 확인, browser rehearsal, final demo preflight까지 통과한 상태입니다.
